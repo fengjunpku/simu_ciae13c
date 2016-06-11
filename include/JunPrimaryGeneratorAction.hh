@@ -38,28 +38,30 @@ using namespace std;
 class JunPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
-	JunPrimaryGeneratorAction();
-	~JunPrimaryGeneratorAction();
-	void GeneratePrimaries(G4Event* anEvent);
+  JunPrimaryGeneratorAction();
+  ~JunPrimaryGeneratorAction();
+  void GeneratePrimaries(G4Event* anEvent);
 private:
-	void JunSetExParticle(G4int zValue,G4int aValue,string particleID);
-	void JunExBeamOn(G4double beamEnergy,G4double excitedEnergy);
-	G4double JunExScattered(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta);
-	G4double JunDisOfPiece(int l_jun,int m_jun);
-	G4double GetMaxLabTheta(G4double initialEnergy,G4double exEnergy);
+  void JunSetExParticle(G4int zValue,G4int aValue,string particleID);
+  void JunExBeamOn(G4double beamEnergy,G4double excitedEnergy);
+  G4double JunExScattered(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta);
+  G4double JunDisOfPiece(int l_jun,int m_jun);
+  G4double GetMaxLabTheta(G4double initialEnergy,G4double exEnergy);
   void LoadCrossSection(string csfile);
   G4double GetAngleByCS();
 private:
-	G4ParticleGun* JunParticleGun;
+  G4ParticleGun* JunParticleGun;
 
-	G4double energyLightPiece,energyHeavyPiece,energyRecoiPiece,breakupThreshold;
-	G4ThreeVector velocityLightPiece,velocityHeavyPiece,mometumRecoiPiece;//velocity;mometum
+  G4double energyLightPiece,energyHeavyPiece,energyRecoiPiece,breakupThreshold;
+  G4ThreeVector velocityLightPiece,velocityHeavyPiece,mometumRecoiPiece;//velocity;mometum
 
-	G4double Mass_a;//beam a
-	G4double Mass_A;//target A
-	G4double Mass_b;//outgoing b
-	G4double Mass_B;//recoil B
-	G4double massLightPiece,massHeavyPiece;//pieces
+  G4double Mass_a;//beam a
+  G4double Mass_A;//target A
+  G4double Mass_b;//outgoing b
+  G4double Mass_B;//recoil B
+  G4double massLightPiece,massHeavyPiece;//pieces
+  G4double* exStates;
+  double numStates;
   TH1D *hist_cs;
 };
 

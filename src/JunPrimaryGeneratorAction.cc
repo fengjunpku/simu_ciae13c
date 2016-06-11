@@ -6,6 +6,9 @@ JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
   G4int numParticle = 1;
   JunParticleGun = new G4ParticleGun(numParticle);
   //----------------
+  G4double states_list[] = {13.2*MeV,14.2*MeV,15.*MeV,16.*MeV};
+  exStates = states_list;
+  numStates = sizeof(states_list)/sizeof(states_list[0]);
   JunSetExParticle(4,9,"target");//9Be
   JunSetExParticle(6,13,"beam");//13C
   JunSetExParticle(2,4,"light");//alpha
@@ -39,6 +42,9 @@ void JunPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   energyRecoiPiece=-1;
   G4double beamEnergyOfEvent = 70.*MeV;
   G4double excitedEnergyOfEvent = 15.*MeV;
+  //----------------------------------
+  excitedEnergyOfEvent = *exStates+(int)CLHEP::RandFlat::shoot(0.,numStates);
+  //------------------------------------
   while(energyLightPiece<0||energyHeavyPiece<0||energyRecoiPiece<0)
   {
     JunExBeamOn(beamEnergyOfEvent,excitedEnergyOfEvent);
