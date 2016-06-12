@@ -7,8 +7,8 @@
 const double Mass_C13 = 12109.5;//*MeV
 const double Mass_Be9 = 8392.75;//*MeV
 const double Mass_He4 = 3727.38;//*MeV
-const double Energy_in = 70,0;//*MeV
-
+const double Energy_in = 70.0;//*MeV
+const double pie=TMath::Pi();
 void test()
 {
   TCanvas *c = new TCanvas();
@@ -31,19 +31,17 @@ void test()
   //hb->Draw("Same");
 }
 
-double C2L(double angle)
+double C2L(double angle,double ex)
 {
-  double pie=TMath::Pi();
-  //double c=13.0/9.0;// elastic
-  double c=13.0/9.0*sqrt(30./15.);//inelastic
+  double cosE = Energy_in*Mass_Be9/(Mass_Be9+Mass_C13);
+  double c=Mass_C13/Mass_Be9*sqrt(cosE/(cosE-ex));
   double xrad=angle/180.0*pie;
   double term1=sqrt(1+c*c+2*c*cos(xrad));
   return acos((c+cos(xrad))/term1)/pie*180.0;
 }
 
-double MaxAngle()
+double MaxAngle(double ex)
 {
-  double pie=TMath::Pi();
   double cosE = Energy_in*Mass_Be9/(Mass_Be9+Mass_C13);
   double c=Mass_C13/Mass_Be9*sqrt(cosE/(cosE-ex));
   return TMath::ACos(-1./c)/pie*180;

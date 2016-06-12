@@ -1,6 +1,6 @@
 #OBJ = DSSD2Tr_March TSCorrSiGe DSSDGeMerge separate_March BuildDecay DSSDGeCorr PLASTIC2Tr
 #OBJ = online_DSSD WASABI2Tr
-OBJ = GenCS 
+OBJ = genCS 
 sourcefile = genCS.cc 
 
 

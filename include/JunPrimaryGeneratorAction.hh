@@ -48,7 +48,7 @@ private:
   G4double JunDisOfPiece(int l_jun,int m_jun);
   G4double GetMaxLabTheta(G4double initialEnergy,G4double exEnergy);
   void LoadCrossSection(string csfile);
-  G4double GetAngleByCS();
+  G4double GetAngleByCS(G4double beamEnergy,G4double exEnergy);
 private:
   G4ParticleGun* JunParticleGun;
 
@@ -61,7 +61,7 @@ private:
   G4double Mass_B;//recoil B
   G4double massLightPiece,massHeavyPiece;//pieces
   G4double* exStates;
-  double numStates;
+  int numStates;
   TH1D *hist_cs;
 };
 
