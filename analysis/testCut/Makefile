@@ -1,4 +1,4 @@
-OBJ = testCut
+OBJ = testCut.exe
 sourcefile = testCut.cc 
 
 
