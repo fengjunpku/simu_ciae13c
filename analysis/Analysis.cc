@@ -55,7 +55,7 @@ int main(int argc,char** argv)
   //-----------------------in--------------------
   //TString inputfile = "jtree_sample.root";
   //TString inputfile = "../beta/build/jtree.root";
-	TString inputfile = "../build/jtree.root";
+  TString inputfile = "../build/jtree.root";
   JunTreeReader *reader = new JunTreeReader(inputfile);
   Long64_t numOfEntries = reader->GetEntries();
   //------------------------out-------------------------
@@ -152,10 +152,10 @@ int main(int argc,char** argv)
         {
           if(hitn==0&&hitNumFront[0]>2) break;
           if(hitn==1&&hitNumFront[0]<2) break;
-					if(iStripBack[hitn]<2*iStripFront[hitn]-2) break;
-					if(iStripBack[hitn]>2*iStripFront[hitn]+2) break;
-					if(jStripBack[hitn]<2*jStripFront[hitn]-2) break;
-					if(jStripBack[hitn]>2*jStripFront[hitn]+2) break;
+          if(iStripBack[hitn]<2*iStripFront[hitn]-2) break;
+          if(iStripBack[hitn]>2*iStripFront[hitn]+2) break;
+          if(jStripBack[hitn]<2*jStripFront[hitn]-2) break;
+          if(jStripBack[hitn]>2*jStripFront[hitn]+2) break;
           double _energy=energyFront[hitn]+energyBack[hitn];
           double _nsTime=timeOfBack[hitn]-timeOfFront[hitn];
           TVector3 _dir(0,0,1);
@@ -213,9 +213,9 @@ int main(int argc,char** argv)
       double energyR = JunDataWriter::Instance()->recoil.energy+0.5;
       TVector3 dirR = TMath::Sqrt(2*Mass_Be9*energyR)*JunDataWriter::Instance()->recoil.direction;
       TVector3 dir0(0,0,1);
-      dir0 = TMath::Sqrt(2*Mass_C13*70)*dir0;
+      dir0 = TMath::Sqrt(2*Mass_C13*69.54)*dir0;
       TVector3 dir_recon = dir0-dirR;
-      double energy_recon = 70-energyR-dir_recon*dir_recon/Mass_C13/2.;
+      double energy_recon = 69.54-energyR-dir_recon*dir_recon/Mass_C13/2.;
       MiMa.SetParticle("mm",energy_recon,dir_recon);
       JunDataWriter::Instance()->mm = MiMa;
     }
