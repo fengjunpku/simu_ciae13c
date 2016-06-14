@@ -19,7 +19,7 @@ using namespace std;
 
 int main(int argc,char** argv)
 {
-  TString inputfile = "../beta/build/etree.root";
+  TString inputfile = "../build/etree.root";
   JunTreeReader *reader = new JunTreeReader(inputfile);
   Long64_t numOfEntries = reader->GetEntries();
   

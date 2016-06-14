@@ -2,3 +2,4 @@
 .tags
 *.root
 *.exe
+nohup.out
