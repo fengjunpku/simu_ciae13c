@@ -197,8 +197,8 @@ int main(int argc,char** argv)
     if(flag_alpha&&flag_breakup)
     {
       JunParticle InMa;
-      double energy1 = JunDataWriter::Instance()->alpha.energy+0.5;
-      double energy2 = JunDataWriter::Instance()->breakup.energy+0.1;
+      double energy1 = JunDataWriter::Instance()->alpha.energy+0.1;
+      double energy2 = JunDataWriter::Instance()->breakup.energy+0.5;
       TVector3 dir1  = TMath::Sqrt(2*Mass_He4*energy1)*JunDataWriter::Instance()->alpha.direction;
       TVector3 dir2  = TMath::Sqrt(2*Mass_Be9*energy2)*JunDataWriter::Instance()->breakup.direction;
       TVector3 dir_recon = dir1+dir2;
