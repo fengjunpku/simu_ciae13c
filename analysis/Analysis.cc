@@ -28,10 +28,12 @@ using namespace std;
 
 int main(int argc,char** argv)
 {
-  JunLossCorrection elc;
-  elc.addDataFile("He_in_Si.txt","HeInSi");
-  cout<<elc.correctEnergy(1,20,"HeInSi")<<endl;
-  exit(0);
+  JunLossCorrection *correction = new JunLossCorrection();
+  correction->addDataFile("He_in_Si.txt","HeInSi");
+  correction->addDataFile("He_in_Be.txt","HeInBe");
+  correction->addDataFile("Be_in_Si.txt","BeInSi");
+  correction->addDataFile("Be_in_Be.txt","BeInBe");
+  //cout<<elc.correctEnergy(1,20,"HeInSi")<<endl;
   //----------------------------------------
   const double Mass_C13 = 12109.5;//*MeV
   const double Mass_Be9 = 8392.75;//*MeV
@@ -161,7 +163,7 @@ int main(int argc,char** argv)
           if(iStripBack[hitn]>2*iStripFront[hitn]+2) break;
           if(jStripBack[hitn]<2*jStripFront[hitn]-2) break;
           if(jStripBack[hitn]>2*jStripFront[hitn]+2) break;
-          double _energy=energyFront[hitn]+energyBack[hitn];
+          double _energy=0;
           double _nsTime=timeOfBack[hitn]-timeOfFront[hitn];
           TVector3 _dir(0,0,1);
           _dir.SetTheta(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
@@ -169,6 +171,12 @@ int main(int argc,char** argv)
           JunParticle thisParticle;
           if(He4->IsInside(energyBack[hitn],energyFront[hitn]))
           {
+            _energy = correction->correctEnergy(1,energyBack[hitn],"HeInSi");
+            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
+            double angle0 = TVector3(0,0,1).Angle(_dir);
+            double rangeInTarget = 1./TMath::Cos(angle0);
+            _energy = correction->correctEnergy(rangeInTarget,_energy,"HeInBe");
+            //cout<<_energy-energyBack[hitn]-energyFront[hitn]<<endl;
             thisParticle.SetParticle("alpha",_energy,_dir);
             numOfEventParticle++;
             flag_alpha=1;
@@ -176,7 +184,13 @@ int main(int argc,char** argv)
           }
           if(Be9->IsInside(energyBack[hitn],energyFront[hitn]))
           {
-            if(all_recoil->IsInside(_dir.Theta()/TMath::Pi()*180,_energy))
+            _energy = correction->correctEnergy(1,energyBack[hitn],"BeInSi");
+            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
+            double angle0 = TVector3(0,0,1).Angle(_dir);
+            double rangeInTarget = 1./TMath::Cos(angle0);
+            _energy = correction->correctEnergy(rangeInTarget,_energy,"BeInBe");
+            //cout<<_energy-energyBack[hitn]-energyFront[hitn]<<endl;
+            if(all_recoil->IsInside(_dir.Theta()/TMath::Pi()*180,energyBack[hitn]+energyFront[hitn]))
             {
               thisParticle.SetParticle("recoil",_energy,_dir);
               numOfEventParticle++;
@@ -202,8 +216,8 @@ int main(int argc,char** argv)
     if(flag_alpha&&flag_breakup)
     {
       JunParticle InMa;
-      double energy1 = JunDataWriter::Instance()->alpha.energy+0.1;
-      double energy2 = JunDataWriter::Instance()->breakup.energy+0.5;
+      double energy1 = JunDataWriter::Instance()->alpha.energy;
+      double energy2 = JunDataWriter::Instance()->breakup.energy;
       TVector3 dir1  = TMath::Sqrt(2*Mass_He4*energy1)*JunDataWriter::Instance()->alpha.direction;
       TVector3 dir2  = TMath::Sqrt(2*Mass_Be9*energy2)*JunDataWriter::Instance()->breakup.direction;
       TVector3 dir_recon = dir1+dir2;
@@ -215,7 +229,7 @@ int main(int argc,char** argv)
     if(flag_recoil)
     {
       JunParticle MiMa;
-      double energyR = JunDataWriter::Instance()->recoil.energy+0.5;
+      double energyR = JunDataWriter::Instance()->recoil.energy;
       TVector3 dirR = TMath::Sqrt(2*Mass_Be9*energyR)*JunDataWriter::Instance()->recoil.direction;
       TVector3 dir0(0,0,1);
       dir0 = TMath::Sqrt(2*Mass_C13*69.54)*dir0;
