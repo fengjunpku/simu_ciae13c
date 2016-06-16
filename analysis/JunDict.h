@@ -31,11 +31,13 @@ extern void G__set_cpp_environmentJunDict();
 
 #include "TObject.h"
 #include "TMemberInspector.h"
-#include "/home/fengjun/TestCode/13C_simulation/analysis/include/JunDataWriter.hh"
-#include "/home/fengjun/TestCode/13C_simulation/analysis/include/JunDSSDAngle.hh"
-#include "/home/fengjun/TestCode/13C_simulation/analysis/include/JunParMan.hh"
-#include "/home/fengjun/TestCode/13C_simulation/analysis/include/JunParticle.hh"
-#include "/home/fengjun/TestCode/13C_simulation/analysis/include/JunTreeReader.hh"
+#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunDataWriter.hh"
+#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunDSSDAngle.hh"
+#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunErrors.hh"
+#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunLossCorrection.hh"
+#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunParMan.hh"
+#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunParticle.hh"
+#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunTreeReader.hh"
 #include <algorithm>
 namespace std { }
 using namespace std;
@@ -77,6 +79,7 @@ extern G__linked_taginfo G__JunDictLN_vectorlEstringcOallocatorlEstringgRsPgR;
 extern G__linked_taginfo G__JunDictLN_reverse_iteratorlEvectorlEstringcOallocatorlEstringgRsPgRcLcLiteratorgR;
 extern G__linked_taginfo G__JunDictLN_vectorlEPar_DSSDcOallocatorlEPar_DSSDgRsPgR;
 extern G__linked_taginfo G__JunDictLN_reverse_iteratorlEvectorlEPar_DSSDcOallocatorlEPar_DSSDgRsPgRcLcLiteratorgR;
+extern G__linked_taginfo G__JunDictLN_maplEstringcOTMVAcLcLTSpline2mUcOlesslEstringgRcOallocatorlEpairlEconstsPstringcOTMVAcLcLTSpline2mUgRsPgRsPgR;
 extern G__linked_taginfo G__JunDictLN_vectorlEJunParticlecOallocatorlEJunParticlegRsPgR;
 extern G__linked_taginfo G__JunDictLN_vectorlEJunParticlecOallocatorlEJunParticlegRsPgRcLcLiterator;
 extern G__linked_taginfo G__JunDictLN_reverse_iteratorlEvectorlEJunParticlecOallocatorlEJunParticlegRsPgRcLcLiteratorgR;

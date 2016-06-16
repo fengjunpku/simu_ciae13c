@@ -21,12 +21,17 @@
 #include "JunTreeReader.hh"
 #include "JunDSSDAngle.hh"
 #include "JunParMan.hh"
+#include "JunLossCorrection.hh"
 using namespace std;
 
 //const double epsA = 2./180.*TMath::Pi();
 
 int main(int argc,char** argv)
 {
+  JunLossCorrection elc;
+  elc.addDataFile("He_in_Si.txt","HeInSi");
+  cout<<elc.correctEnergy(1,20,"HeInSi")<<endl;
+  exit(0);
   //----------------------------------------
   const double Mass_C13 = 12109.5;//*MeV
   const double Mass_Be9 = 8392.75;//*MeV
