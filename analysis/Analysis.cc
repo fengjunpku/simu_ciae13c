@@ -51,13 +51,13 @@ int main(int argc,char** argv)
   TCutG *t1l_Be9,*t1l_alpha,*t2l_Be9,*t2l_alpha,*all_recoil;
   TFile *cf = TFile::Open("cutfile/recoil_v0.root");
   cf->GetObject("CUTG",all_recoil);
-  cf = TFile::Open("cutfile/t1l_alpha.root");
+  cf = TFile::Open("cutfile/t1_20u_4he.root");
   cf->GetObject("CUTG",t1l_alpha);
   cf = TFile::Open("cutfile/t2l_Be9.root");
   cf->GetObject("CUTG",t2l_Be9);
   cf = TFile::Open("cutfile/t2l_alpha.root");
   cf->GetObject("CUTG",t2l_alpha);
-  cf = TFile::Open("cutfile/t1l_Be9.root");
+  cf = TFile::Open("cutfile/t1_20u_9be.root");
   cf->GetObject("CUTG",t1l_Be9);
   //-----------------------in--------------------
   //TString inputfile = "jtree_sample.root";
