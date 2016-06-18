@@ -38,9 +38,10 @@ int main(int argc,char** argv)
   const double Mass_C13 = 12109.5;//*MeV
   const double Mass_Be9 = 8392.75;//*MeV
   const double Mass_He4 = 3727.38;//*MeV
+  //--------------------
   // TApplication *theApp = new TApplication("app",&argc,argv);
-  // TCanvas *c = new TCanvas("c","distribution of angle",800,600);
-  // TH2D *h = new TH2D("h","distribution of angle",160,0,80,720,-180,180);
+  // TCanvas *c = new TCanvas("c","distribution",800,600);
+  // TH2D *h = new TH2D("h","distribution",500,0,50,500,0,50);
   //Load the setup & parameter of detectors
   JunParMan::Instance()->ReadParFile("../fj13c_setup.par");
   string teleNameBack[4]={"t1l2","t1r2","t2l2","t2r2"};
@@ -49,7 +50,7 @@ int main(int argc,char** argv)
   //cout<<jAngle->GetTheta("t1l1",1,1)/TMath::Pi()*180<<endl;
   //---------------------load cut---------------------
   TCutG *t1l_Be9,*t1l_alpha,*t2l_Be9,*t2l_alpha,*all_recoil;
-  TFile *cf = TFile::Open("cutfile/recoil_v0.root");
+  TFile *cf = TFile::Open("cutfile/recoils_cg.root");
   cf->GetObject("CUTG",all_recoil);
   cf = TFile::Open("cutfile/t1_20u_4he.root");
   cf->GetObject("CUTG",t1l_alpha);
@@ -85,6 +86,7 @@ int main(int argc,char** argv)
       int jStripFront[2],jStripBack[2];
       double energyFront[2],energyBack[2];
       double timeOfFront[2],timeOfBack[2];
+      double xBack[2],yBack[2];
       TCutG *He4,*Be9;
       switch(it)
       {
@@ -102,6 +104,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t1l1t[1];timeOfBack[1]=reader->t1l2t[1];
           He4 = t1l_alpha;
           Be9 = t1l_Be9;
+          xBack[0] = reader->t1l1x[0];
+          xBack[1] = reader->t1l1x[1];
+          yBack[0] = reader->t1l1y[0];
+          yBack[1] = reader->t1l1y[1];
           break;
         }
         case 1://t1r
@@ -118,6 +124,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t1r1t[1];timeOfBack[1]=reader->t1r2t[1];
           He4 = t1l_alpha;
           Be9 = t1l_Be9;
+          xBack[0] = reader->t1r1x[0];
+          xBack[1] = reader->t1r1x[1];
+          yBack[0] = reader->t1r1y[0];
+          yBack[1] = reader->t1r1y[1];
           break;
         }
         case 2://t2l
@@ -134,6 +144,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t2l1t[1];timeOfBack[1]=reader->t2l2t[1];
           He4 = t2l_alpha;
           Be9 = t2l_Be9;
+          xBack[0] = reader->t1l2x[0];
+          xBack[1] = reader->t1l2x[1];
+          yBack[0] = reader->t1l2y[0];
+          yBack[1] = reader->t1l2y[1];
           break;
         }
         case 3://t2r
@@ -150,6 +164,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t2r1t[1];timeOfBack[1]=reader->t2r2t[1];
           He4 = t2l_alpha;
           Be9 = t2l_Be9;
+          xBack[0] = reader->t1r2x[0];
+          xBack[1] = reader->t1r2x[1];
+          yBack[0] = reader->t1r2y[0];
+          yBack[1] = reader->t1r2y[1];
           break;
         }
       }
@@ -157,17 +175,21 @@ int main(int argc,char** argv)
       {
         for(int hitn=0;hitn<2;hitn++)//2 hits 
         {
+          //if(it!=0&&it!=3) break;
           if(hitn==0&&hitNumFront[0]>2) break;
           if(hitn==1&&hitNumFront[0]<2) break;
-          if(iStripBack[hitn]<2*iStripFront[hitn]-2) break;
-          if(iStripBack[hitn]>2*iStripFront[hitn]+2) break;
-          if(jStripBack[hitn]<2*jStripFront[hitn]-2) break;
-          if(jStripBack[hitn]>2*jStripFront[hitn]+2) break;
+          if(iStripBack[hitn]<2*iStripFront[hitn]-1) break;
+          if(iStripBack[hitn]>2*iStripFront[hitn]+1) break;
+          if(jStripBack[hitn]<2*jStripFront[hitn]-1) break;
+          if(jStripBack[hitn]>2*jStripFront[hitn]+1) break;
           double _energy = energyBack[hitn]+energyFront[hitn];
           double _nsTime=timeOfBack[hitn]-timeOfFront[hitn];
           TVector3 _dir(0,0,1);
-          _dir.SetTheta(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
-          _dir.SetPhi(jAngle->GetPhi(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
+          //_dir.SetTheta(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
+          //_dir.SetPhi(jAngle->GetPhi(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
+          _dir.SetTheta(jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]));
+          _dir.SetPhi(jAngle->RealPhi(teleNameBack[it],xBack[hitn],yBack[hitn]));
+          cout<<(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn])-jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]))/TMath::Pi()*180<<endl;
           JunParticle thisParticle;
           if(He4->IsInside(energyBack[hitn],energyFront[hitn]))
           {
@@ -175,7 +197,7 @@ int main(int argc,char** argv)
             //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
-            //_energy = correction->correctEnergy(rangeInTarget,_energy,"HeInBe");
+            _energy = correction->correctEnergy(rangeInTarget,_energy,"HeInBe");
             //cout<<_energy-energyBack[hitn]-energyFront[hitn]<<endl;
             thisParticle.SetParticle("alpha",_energy,_dir);
             numOfEventParticle++;
@@ -188,9 +210,9 @@ int main(int argc,char** argv)
             //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
-            //_energy = correction->correctEnergy(rangeInTarget,_energy,"BeInBe");
+            _energy = correction->correctEnergy(rangeInTarget,_energy,"BeInBe");
             //cout<<_energy-energyBack[hitn]-energyFront[hitn]<<endl;
-            if(all_recoil->IsInside(_dir.Theta()/TMath::Pi()*180,energyBack[hitn]+energyFront[hitn]))
+            if(all_recoil->IsInside(_dir.Theta()/TMath::Pi()*180,_energy))
             {
               thisParticle.SetParticle("recoil",_energy,_dir);
               numOfEventParticle++;

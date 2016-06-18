@@ -10,6 +10,7 @@
 #include <TVector3.h>
 #include <TMath.h>
 #include "JunParMan.hh"
+#include "JunErrors.hh"
 using namespace std;
 
 class JunDSSDAngle
@@ -22,6 +23,8 @@ public:
   static JunDSSDAngle* Instance();
   double GetTheta(string dssdname,int i,int j);
   double GetPhi(string dssdname,int i,int j);
+  double RealTheta(string dssdname,double x,double y);//*mm
+  double RealPhi(string dssdname,double x,double y);//*mm
 private:
   map<string,double> mapOfTheta;//*rad
   map<string,double> mapOfPhi;//*rad
