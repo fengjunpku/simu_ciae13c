@@ -163,7 +163,7 @@ int main(int argc,char** argv)
           if(iStripBack[hitn]>2*iStripFront[hitn]+2) break;
           if(jStripBack[hitn]<2*jStripFront[hitn]-2) break;
           if(jStripBack[hitn]>2*jStripFront[hitn]+2) break;
-          double _energy=0;
+          double _energy = energyBack[hitn]+energyFront[hitn];
           double _nsTime=timeOfBack[hitn]-timeOfFront[hitn];
           TVector3 _dir(0,0,1);
           _dir.SetTheta(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
@@ -171,11 +171,11 @@ int main(int argc,char** argv)
           JunParticle thisParticle;
           if(He4->IsInside(energyBack[hitn],energyFront[hitn]))
           {
-            _energy = correction->correctEnergy(1,energyBack[hitn],"HeInSi");
-            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
+            //_energy = correction->correctEnergy(1,energyBack[hitn],"HeInSi");
+            //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
-            _energy = correction->correctEnergy(rangeInTarget,_energy,"HeInBe");
+            //_energy = correction->correctEnergy(rangeInTarget,_energy,"HeInBe");
             //cout<<_energy-energyBack[hitn]-energyFront[hitn]<<endl;
             thisParticle.SetParticle("alpha",_energy,_dir);
             numOfEventParticle++;
@@ -184,11 +184,11 @@ int main(int argc,char** argv)
           }
           if(Be9->IsInside(energyBack[hitn],energyFront[hitn]))
           {
-            _energy = correction->correctEnergy(1,energyBack[hitn],"BeInSi");
-            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
+            //_energy = correction->correctEnergy(1,energyBack[hitn],"BeInSi");
+            //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
-            _energy = correction->correctEnergy(rangeInTarget,_energy,"BeInBe");
+            //_energy = correction->correctEnergy(rangeInTarget,_energy,"BeInBe");
             //cout<<_energy-energyBack[hitn]-energyFront[hitn]<<endl;
             if(all_recoil->IsInside(_dir.Theta()/TMath::Pi()*180,energyBack[hitn]+energyFront[hitn]))
             {
