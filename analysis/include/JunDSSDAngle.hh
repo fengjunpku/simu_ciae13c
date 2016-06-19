@@ -25,6 +25,7 @@ public:
   double GetPhi(string dssdname,int i,int j);
   double RealTheta(string dssdname,double x,double y);//*mm
   double RealPhi(string dssdname,double x,double y);//*mm
+  int Check(string dssdname,int i,int j,double x,double y);
 private:
   map<string,double> mapOfTheta;//*rad
   map<string,double> mapOfPhi;//*rad

@@ -185,21 +185,16 @@ int main(int argc,char** argv)
           double _energy = energyBack[hitn]+energyFront[hitn];
           double _nsTime=timeOfBack[hitn]-timeOfFront[hitn];
           TVector3 _dir(0,0,1);
-          //_dir.SetTheta(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
-          //_dir.SetPhi(jAngle->GetPhi(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
-          _dir.SetTheta(jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]));
-          _dir.SetPhi(jAngle->RealPhi(teleNameBack[it],xBack[hitn],yBack[hitn]));
-          if(it>1)
-          {
-          cout<<it<<" "<<jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn])-jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]);
-          cout<<" "<<iStripBack[hitn]<<" "<<xBack[hitn];
-          cout<<" "<<jStripBack[hitn]<<" "<<yBack[hitn]<<endl;
-          }
+          _dir.SetTheta(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
+          _dir.SetPhi(jAngle->GetPhi(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
+          // _dir.SetTheta(jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]));
+          // _dir.SetPhi(jAngle->RealPhi(teleNameBack[it],xBack[hitn],yBack[hitn]));
+          //cout<<jAngle->Check(teleNameBack[it],iStripBack[hitn],jStripBack[hitn],xBack[hitn],yBack[hitn])<<endl;
           JunParticle thisParticle;
           if(He4->IsInside(energyBack[hitn],energyFront[hitn]))
           {
-            //_energy = correction->correctEnergy(1,energyBack[hitn],"HeInSi");
-            //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
+            _energy = correction->correctEnergy(1,energyBack[hitn],"HeInSi");
+            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
             _energy = correction->correctEnergy(rangeInTarget,_energy,"HeInBe");
@@ -211,8 +206,8 @@ int main(int argc,char** argv)
           }
           if(Be9->IsInside(energyBack[hitn],energyFront[hitn]))
           {
-            //_energy = correction->correctEnergy(1,energyBack[hitn],"BeInSi");
-            //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
+            _energy = correction->correctEnergy(1,energyBack[hitn],"BeInSi");
+            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
             _energy = correction->correctEnergy(rangeInTarget,_energy,"BeInBe");
