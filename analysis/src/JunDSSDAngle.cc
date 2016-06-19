@@ -57,7 +57,7 @@ double JunDSSDAngle::RealTheta(string dssdname,double x,double y)
   JunParMan *jParMan = JunParMan::Instance();
   Par_DSSD *dssdPar = jParMan->GetDSSDPar(dssdname);
   if(dssdPar==NULL) MiaoError("Miao! Error: Key: "+dssdname+" is not in phi Map!");
-  TVector3 position;
+  TVector3 position(0,0,0);
   position[0]=x;
   position[1]=y;
   position[2]=dssdPar->distance;

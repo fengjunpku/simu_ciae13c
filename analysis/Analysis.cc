@@ -104,10 +104,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t1l1t[1];timeOfBack[1]=reader->t1l2t[1];
           He4 = t1l_alpha;
           Be9 = t1l_Be9;
-          xBack[0] = reader->t1l1x[0];
-          xBack[1] = reader->t1l1x[1];
-          yBack[0] = reader->t1l1y[0];
-          yBack[1] = reader->t1l1y[1];
+          xBack[0] = reader->t1l2x[0];
+          xBack[1] = reader->t1l2x[1];
+          yBack[0] = reader->t1l2y[0];
+          yBack[1] = reader->t1l2y[1];
           break;
         }
         case 1://t1r
@@ -124,10 +124,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t1r1t[1];timeOfBack[1]=reader->t1r2t[1];
           He4 = t1l_alpha;
           Be9 = t1l_Be9;
-          xBack[0] = reader->t1r1x[0];
-          xBack[1] = reader->t1r1x[1];
-          yBack[0] = reader->t1r1y[0];
-          yBack[1] = reader->t1r1y[1];
+          xBack[0] = reader->t1r2x[0];
+          xBack[1] = reader->t1r2x[1];
+          yBack[0] = reader->t1r2y[0];
+          yBack[1] = reader->t1r2y[1];
           break;
         }
         case 2://t2l
@@ -144,10 +144,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t2l1t[1];timeOfBack[1]=reader->t2l2t[1];
           He4 = t2l_alpha;
           Be9 = t2l_Be9;
-          xBack[0] = reader->t1l2x[0];
-          xBack[1] = reader->t1l2x[1];
-          yBack[0] = reader->t1l2y[0];
-          yBack[1] = reader->t1l2y[1];
+          xBack[0] = reader->t2l2x[0];
+          xBack[1] = reader->t2l2x[1];
+          yBack[0] = reader->t2l2y[0];
+          yBack[1] = reader->t2l2y[1];
           break;
         }
         case 3://t2r
@@ -164,10 +164,10 @@ int main(int argc,char** argv)
           timeOfFront[1]=reader->t2r1t[1];timeOfBack[1]=reader->t2r2t[1];
           He4 = t2l_alpha;
           Be9 = t2l_Be9;
-          xBack[0] = reader->t1r2x[0];
-          xBack[1] = reader->t1r2x[1];
-          yBack[0] = reader->t1r2y[0];
-          yBack[1] = reader->t1r2y[1];
+          xBack[0] = reader->t2r2x[0];
+          xBack[1] = reader->t2r2x[1];
+          yBack[0] = reader->t2r2y[0];
+          yBack[1] = reader->t2r2y[1];
           break;
         }
       }
@@ -180,8 +180,8 @@ int main(int argc,char** argv)
           if(hitn==1&&hitNumFront[0]<2) break;
           if(iStripBack[hitn]<2*iStripFront[hitn]-1) break;
           if(iStripBack[hitn]>2*iStripFront[hitn]+1) break;
-          if(jStripBack[hitn]<2*jStripFront[hitn]-1) break;
-          if(jStripBack[hitn]>2*jStripFront[hitn]+1) break;
+          if(jStripBack[hitn]<2*jStripFront[hitn]-1&&it<2) break;
+          if(jStripBack[hitn]>2*jStripFront[hitn]+1&&it<2) break;
           double _energy = energyBack[hitn]+energyFront[hitn];
           double _nsTime=timeOfBack[hitn]-timeOfFront[hitn];
           TVector3 _dir(0,0,1);
@@ -189,7 +189,12 @@ int main(int argc,char** argv)
           //_dir.SetPhi(jAngle->GetPhi(teleNameBack[it],iStripBack[hitn],jStripBack[hitn]));
           _dir.SetTheta(jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]));
           _dir.SetPhi(jAngle->RealPhi(teleNameBack[it],xBack[hitn],yBack[hitn]));
-          cout<<(jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn])-jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]))/TMath::Pi()*180<<endl;
+          if(it>1)
+          {
+          cout<<it<<" "<<jAngle->GetTheta(teleNameBack[it],iStripBack[hitn],jStripBack[hitn])-jAngle->RealTheta(teleNameBack[it],xBack[hitn],yBack[hitn]);
+          cout<<" "<<iStripBack[hitn]<<" "<<xBack[hitn];
+          cout<<" "<<jStripBack[hitn]<<" "<<yBack[hitn]<<endl;
+          }
           JunParticle thisParticle;
           if(He4->IsInside(energyBack[hitn],energyFront[hitn]))
           {
