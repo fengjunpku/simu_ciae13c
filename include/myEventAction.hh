@@ -12,24 +12,25 @@
 #include "myHit.hh"
 //#include "myAnalysis.hh"
 #include "myTTreeRecorder.hh"
+#include <TRandom3.h>
 #include "JunParMan.hh"
 #include <vector>
 #include <string>
 class myEventAction : public G4UserEventAction
 {
 public:
-	myEventAction();
-	virtual ~myEventAction();
-	virtual void BeginOfEventAction(const G4Event*);
-	virtual void EndOfEventAction(const G4Event*);
+  myEventAction();
+  virtual ~myEventAction();
+  virtual void BeginOfEventAction(const G4Event*);
+  virtual void EndOfEventAction(const G4Event*);
 private:
-	double* energy;
-	double* time;
-	double* px;
-	double* py;
-	int* iStrip;
-	int* jStrip;
-	int nhit;
+  double* energy;
+  double* time;
+  double* px;
+  double* py;
+  int* iStrip;
+  int* jStrip;
+  int nhit;
 };
 
 
