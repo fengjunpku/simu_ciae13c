@@ -50,7 +50,7 @@ int main(int argc,char** argv)
   //cout<<jAngle->GetTheta("t1l1",1,1)/TMath::Pi()*180<<endl;
   //---------------------load cut---------------------
   TCutG *t1l_Be9,*t1l_alpha,*t2l_Be9,*t2l_alpha,*all_recoil;
-  TFile *cf = TFile::Open("cutfile/recoils_cg.root");
+  TFile *cf = TFile::Open("cutfile/big_recoil.root");
   cf->GetObject("CUTG",all_recoil);
   cf = TFile::Open("cutfile/t1_20u_4he.root");
   cf->GetObject("CUTG",t1l_alpha);
@@ -193,8 +193,8 @@ int main(int argc,char** argv)
           JunParticle thisParticle;
           if(He4->IsInside(energyBack[hitn],energyFront[hitn]))
           {
-            //_energy = correction->correctEnergy(1,energyBack[hitn],"HeInSi");
-            //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
+            _energy = correction->correctEnergy(1,energyBack[hitn],"HeInSi");
+            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"HeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
             _energy = correction->correctEnergy(rangeInTarget,_energy,"HeInBe");
@@ -206,8 +206,8 @@ int main(int argc,char** argv)
           }
           if(Be9->IsInside(energyBack[hitn],energyFront[hitn]))
           {
-            //_energy = correction->correctEnergy(1,energyBack[hitn],"BeInSi");
-            //_energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
+            _energy = correction->correctEnergy(1,energyBack[hitn],"BeInSi");
+            _energy = correction->correctEnergy(1,_energy+energyFront[hitn],"BeInSi");
             double angle0 = TVector3(0,0,1).Angle(_dir);
             double rangeInTarget = 1./TMath::Cos(angle0);
             _energy = correction->correctEnergy(rangeInTarget,_energy,"BeInBe");
