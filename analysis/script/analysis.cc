@@ -9,9 +9,9 @@
 
 //Reset ROOT and connect tree file
    gROOT->Reset();
-   TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("jtree.root");
+   TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("../../build/jtree.root");
    if (!f) {
-      f = new TFile("jtree.root");
+      f = new TFile("../../build/jtree.root");
    }
     f->GetObject("jtree",jtree);
 
@@ -141,8 +141,8 @@
 
    Long64_t nbytes = 0;
    for (Long64_t i=0; i<nentries;i++) 
-   {
-      nbytes += jtree->GetEntry(i);
+   { 
+			nbytes += jtree->GetEntry(i);
       h->Fill(t1l2e[0],t1l1e[0]);
    }
    h->Draw();
