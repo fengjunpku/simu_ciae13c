@@ -31,13 +31,13 @@ extern void G__set_cpp_environmentJunDict();
 
 #include "TObject.h"
 #include "TMemberInspector.h"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunDataWriter.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunDSSDAngle.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunErrors.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunLossCorrection.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunParMan.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunParticle.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/include/JunTreeReader.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/analysis/include/JunDSSDAngle.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/analysis/include/JunDataWriter.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/analysis/include/JunErrors.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/analysis/include/JunLossCorrection.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/analysis/include/JunParMan.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/analysis/include/JunParticle.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/analysis/include/JunTreeReader.hh"
 #include <algorithm>
 namespace std { }
 using namespace std;
@@ -50,8 +50,6 @@ extern G__linked_taginfo G__JunDictLN_vectorlEROOTcLcLTSchemaHelpercOallocatorlE
 extern G__linked_taginfo G__JunDictLN_reverse_iteratorlEvectorlEROOTcLcLTSchemaHelpercOallocatorlEROOTcLcLTSchemaHelpergRsPgRcLcLiteratorgR;
 extern G__linked_taginfo G__JunDictLN_vectorlETVirtualArraymUcOallocatorlETVirtualArraymUgRsPgR;
 extern G__linked_taginfo G__JunDictLN_reverse_iteratorlEvectorlETVirtualArraymUcOallocatorlETVirtualArraymUgRsPgRcLcLiteratorgR;
-extern G__linked_taginfo G__JunDictLN_iteratorlEbidirectional_iterator_tagcOTObjectmUcOlongcOconstsPTObjectmUmUcOconstsPTObjectmUaNgR;
-extern G__linked_taginfo G__JunDictLN_maplEstringcOTObjArraymUcOlesslEstringgRcOallocatorlEpairlEconstsPstringcOTObjArraymUgRsPgRsPgR;
 extern G__linked_taginfo G__JunDictLN_TMatrixTBaselEfloatgR;
 extern G__linked_taginfo G__JunDictLN_TMatrixTBaselEdoublegR;
 extern G__linked_taginfo G__JunDictLN_TVectorTlEfloatgR;
@@ -74,11 +72,14 @@ extern G__linked_taginfo G__JunDictLN_TMatrixTSublEfloatgR;
 extern G__linked_taginfo G__JunDictLN_TMatrixTSparseRowlEfloatgR;
 extern G__linked_taginfo G__JunDictLN_TMatrixTSparseDiaglEfloatgR;
 extern G__linked_taginfo G__JunDictLN_TVector3;
-extern G__linked_taginfo G__JunDictLN_JunParticle;
 extern G__linked_taginfo G__JunDictLN_vectorlEstringcOallocatorlEstringgRsPgR;
 extern G__linked_taginfo G__JunDictLN_reverse_iteratorlEvectorlEstringcOallocatorlEstringgRsPgRcLcLiteratorgR;
+extern G__linked_taginfo G__JunDictLN_maplEstringcOdoublecOlesslEstringgRcOallocatorlEpairlEconstsPstringcOdoublegRsPgRsPgR;
 extern G__linked_taginfo G__JunDictLN_vectorlEPar_DSSDcOallocatorlEPar_DSSDgRsPgR;
 extern G__linked_taginfo G__JunDictLN_reverse_iteratorlEvectorlEPar_DSSDcOallocatorlEPar_DSSDgRsPgRcLcLiteratorgR;
+extern G__linked_taginfo G__JunDictLN_iteratorlEbidirectional_iterator_tagcOTObjectmUcOlongcOconstsPTObjectmUmUcOconstsPTObjectmUaNgR;
+extern G__linked_taginfo G__JunDictLN_maplEstringcOTObjArraymUcOlesslEstringgRcOallocatorlEpairlEconstsPstringcOTObjArraymUgRsPgRsPgR;
+extern G__linked_taginfo G__JunDictLN_JunParticle;
 extern G__linked_taginfo G__JunDictLN_maplEstringcOTMVAcLcLTSpline2mUcOlesslEstringgRcOallocatorlEpairlEconstsPstringcOTMVAcLcLTSpline2mUgRsPgRsPgR;
 extern G__linked_taginfo G__JunDictLN_vectorlEJunParticlecOallocatorlEJunParticlegRsPgR;
 extern G__linked_taginfo G__JunDictLN_vectorlEJunParticlecOallocatorlEJunParticlegRsPgRcLcLiterator;

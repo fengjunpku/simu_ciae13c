@@ -82,7 +82,9 @@ void myEventAction::EndOfEventAction(const G4Event* evt)
       
       for(int mp=0;mp<maxParticles;++mp)
       {
-        rec->var[7*i+0][mp] = energy[mp+1]+Trndm.Gaus(0,0.1);
+        if(energy[mp+1]>0)
+          energy[mp+1] += Trndm.Gaus(0,0.1);
+        rec->var[7*i+0][mp] = energy[mp+1];//+Trndm.Gaus(0,0.1);
         rec->var[7*i+1][mp] = time[mp+1];
         rec->var[7*i+2][mp] = px[mp+1];
         rec->var[7*i+3][mp] = py[mp+1];
