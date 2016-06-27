@@ -31,9 +31,9 @@ extern void G__set_cpp_environmentJunDict();
 
 #include "TObject.h"
 #include "TMemberInspector.h"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/emit/include/JunDataWriter.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/emit/include/JunParticle.hh"
-#include "/home/fengjun/CodesAtPKU/simu_ciae13c/emit/include/JunTreeReader.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/emit/include/JunDataWriter.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/emit/include/JunParticle.hh"
+#include "/Users/fengjun/CodesAtGitHub/simu_ciae13c/emit/include/JunTreeReader.hh"
 #include <algorithm>
 namespace std { }
 using namespace std;
