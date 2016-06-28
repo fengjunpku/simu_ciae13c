@@ -26,7 +26,7 @@ int main(int argc,char** argv)
   TApplication *theApp = new TApplication("app",&argc,argv);
   TCanvas *c = new TCanvas("c","distribution of angle",800,600);
   //TH2D *h = new TH2D("h","distribution of angle",160,0,80,720,-180,180);
-  gROOT->SetMacroPath("/home/fengjun/share/analysis/testCut/");
+  gROOT->SetMacroPath("/home/fengjun/CodesAtPKU/simu_ciae13c/analysis/testCut/");
   gROOT->ProcessLine(".x 9Be_t1l.cc");
   TFile *_file0 = TFile::Open("jtree_sample.root");
   gROOT->ProcessLine("jtree->Draw(\"t1l1e:t1l2e\",\"Be9_t1l\",\"colz\")");
