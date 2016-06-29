@@ -251,12 +251,13 @@ int main(int argc,char** argv)
     if(flag_recoil)
     {
       JunParticle MiMa;
+			double beamEnergy = 69.54;//*MeV;or 69.54 0r 70
       double energyR = JunDataWriter::Instance()->recoil.energy;
       TVector3 dirR = TMath::Sqrt(2*Mass_Be9*energyR)*JunDataWriter::Instance()->recoil.direction;
       TVector3 dir0(0,0,1);
-      dir0 = TMath::Sqrt(2*Mass_C13*69.54)*dir0;
+      dir0 = TMath::Sqrt(2*Mass_C13*beamEnergy)*dir0;
       TVector3 dir_recon = dir0-dirR;
-      double energy_recon = 69.54-energyR-dir_recon*dir_recon/Mass_C13/2.;
+      double energy_recon = beamEnergy-energyR-dir_recon*dir_recon/Mass_C13/2.;
       MiMa.SetParticle("mm",energy_recon,dir_recon);
       JunDataWriter::Instance()->mm = MiMa;
     }
