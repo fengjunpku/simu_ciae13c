@@ -261,6 +261,19 @@ int main(int argc,char** argv)
       MiMa.SetParticle("mm",energy_recon,dir_recon);
       JunDataWriter::Instance()->mm = MiMa;
     }
+    //--------------mix----
+    if(flag_alpha&&flag_recoil)
+    {
+      JunParticle Mix;
+      double energy1 = JunDataWriter::Instance()->alpha.energy;
+      double energy2 = JunDataWriter::Instance()->recoil.energy;
+      TVector3 dir1  = TMath::Sqrt(2*Mass_He4*energy1)*JunDataWriter::Instance()->alpha.direction;
+      TVector3 dir2  = TMath::Sqrt(2*Mass_Be9*energy2)*JunDataWriter::Instance()->recoil.direction;
+      TVector3 dir_recon = dir1+dir2;
+      double energy_recon = energy1+energy2-dir_recon*dir_recon/Mass_C13/2.;
+      Mix.SetParticle("mix",energy_recon,dir_recon);
+      JunDataWriter::Instance()->mix = Mix;
+    }
     //---------------------------------
     if(numOfEventParticle>0) JunDataWriter::Instance()->Fill();
   }

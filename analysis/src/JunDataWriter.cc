@@ -24,20 +24,21 @@ void JunDataWriter::OpenFile(const TString filename)
   otree->Branch("recoil",&recoil,32000,3);
   otree->Branch("im",&im,32000,3);
   otree->Branch("mm",&mm,32000,3);
+  otree->Branch("mix",&mix,32000,3);
 }
 //////////////////////////
 JunDataWriter* JunDataWriter::Instance()
 {
-	if(theWriter==NULL)
-		theWriter = new JunDataWriter();
-	return theWriter;
+  if(theWriter==NULL)
+    theWriter = new JunDataWriter();
+  return theWriter;
 }
 /////////////////////////
 void JunDataWriter::Record()
 {
-	ofile->cd();
-	otree->Write();
-	ofile->Close();
+  ofile->cd();
+  otree->Write();
+  ofile->Close();
 }
 
 void JunDataWriter::Fill()

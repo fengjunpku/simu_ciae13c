@@ -36,5 +36,6 @@ public:
   JunParticle recoil;
   JunParticle im;
   JunParticle mm;
+  JunParticle mix;
 };
 #endif
