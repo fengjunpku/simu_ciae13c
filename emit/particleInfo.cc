@@ -67,7 +67,19 @@ int main(int argc,char** argv)
     double energy_recon = im_e1+im_e2-dir_recon*dir_recon/Mass_C13/2.+r.Gaus(0,0.1);
     im.SetParticle("im",energy_recon,dir_recon.X(),dir_recon.Y(),dir_recon.Z());
     JunDataWriter::Instance()->vParticle.push_back(im);
-    //-------------
+    //-------------mix
+    JunParticle mix;
+    Double_t mix_e1 = reader->energy[0]+0.1;
+    Double_t mix_e2 = reader->energy[2]+0.5;
+    TVector3 mix_dir1(reader->px[0],reader->py[0],reader->pz[0]);
+    mix_dir1 = TMath::Sqrt(2*Mass_He4*mix_e1)*mix_dir1.Unit();
+    TVector3 mix_dir2(reader->px[2],reader->py[2],reader->pz[2]);
+    mix_dir2 = TMath::Sqrt(2*Mass_Be9*mix_e2)*mix_dir2.Unit();
+    TVector3 dir_recon_mix = mix_dir1+mix_dir2;
+    double energy_recon_mix = mix_e1+mix_e2-dir_recon_mix*dir_recon_mix/Mass_C13/2.+r.Gaus(0,0.1);
+    mix.SetParticle("mix",energy_recon_mix,dir_recon_mix.X(),dir_recon_mix.Y(),dir_recon_mix.Z());
+    JunDataWriter::Instance()->vParticle.push_back(mix);
+    //---------------
     JunDataWriter::Instance()->Fill();
   }
   JunDataWriter::Instance()->Record();
