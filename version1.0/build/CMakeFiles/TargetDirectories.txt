@@ -1,3 +1,0 @@
-/home/fengjun/CodesAtPKU/simu_ciae13c/version1.0/build/CMakeFiles/edit_cache.dir
-/home/fengjun/CodesAtPKU/simu_ciae13c/version1.0/build/CMakeFiles/ciae13c.dir
-/home/fengjun/CodesAtPKU/simu_ciae13c/version1.0/build/CMakeFiles/rebuild_cache.dir
