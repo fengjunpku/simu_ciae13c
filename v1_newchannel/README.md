@@ -1,6 +1,6 @@
 # Discription
 Simulate the reaction of `9Be(13C,13C*->9Be+4He)9Be`
-
+3alpha+n channel taken into consideration
 # Usage
 ```
 cd This_Proj_Dir
