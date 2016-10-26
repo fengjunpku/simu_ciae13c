@@ -2,12 +2,12 @@
 
 JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
 {
-
+  isRecord = true;//record the emmitting ones
   //particle number per shoot 
   G4int numParticle = 1;
   JunParticleGun = new G4ParticleGun(numParticle);
   //---basic parameters for elastic breakup
-  G4double states_list[] = {13.2*MeV,14.2*MeV,15.*MeV,16.*MeV};
+  G4double states_list[] = {0.*MeV,13.2*MeV,14.2*MeV,15.*MeV,16.*MeV};
   //string files_list[] = {"genCS/cs_"}
   numStates = sizeof(states_list)/sizeof(states_list[0]);
   exStates = new G4double[numStates];
@@ -41,6 +41,11 @@ JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
   jbMode[1].piece["breakHe4a"] = {4,2,1,JunNucleiProperties->GetNuclearMass(4,2),G4ThreeVector(0,0,1),0,NULL};
   jbMode[1].piece["breakHe4b"] = {4,2,1,JunNucleiProperties->GetNuclearMass(4,2),G4ThreeVector(0,0,1),0,NULL};
   jbMode[1].piece["breakHe4c"] = {4,2,1,JunNucleiProperties->GetNuclearMass(4,2),G4ThreeVector(0,0,1),0,NULL};
+  //elastic
+  jbMode[2].threshold = -1000*MeV;
+  jbMode[2].numbreak = 0;
+  jbMode[2].piece["recoilBe9"] = {9,4,0,JunNucleiProperties->GetNuclearMass(9,4),G4ThreeVector(0,0,1),0,NULL};
+  jbMode[2].piece["recoilC13"] = {13,6,0,JunNucleiProperties->GetNuclearMass(13,6),G4ThreeVector(0,0,1),0,NULL};
 }
 
 JunPrimaryGeneratorAction::~JunPrimaryGeneratorAction()
@@ -50,76 +55,19 @@ JunPrimaryGeneratorAction::~JunPrimaryGeneratorAction()
 
 void JunPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-  //G4ParticleDefinition* G4IonTable::GetIon(G4int Z, G4int A, G4double E, G4int J=0)
-  //..................................GetIon(G4int Z, G4int A, G4int lvl=0)
-  // G4ParticleDefinition *lightPiece = G4IonTable::GetIonTable()->GetIon(2,4);
-  // G4ParticleDefinition *heavyPiece = G4IonTable::GetIonTable()->GetIon(4,9);
-  // G4ParticleDefinition *recoiPiece = G4IonTable::GetIonTable()->GetIon(4,9);
-  //----------------------------
-  energyLightPiece=-1;
-  energyHeavyPiece=-1;
-  energyRecoiPiece=-1;
-  G4double beamEnergyOfEvent = 70.*MeV;
+  //----------------------------------------------
+  G4double beamEnergyOfEvent = 65.*MeV;
   G4double excitedEnergyOfEvent = 15.*MeV;
   //----------------------------------
-  excitedEnergyOfEvent = *(exStates+(int)CLHEP::RandFlat::shoot(0.,numStates));
-  //==========================
-  JunPreparePieces(jbMode[1],beamEnergyOfEvent,excitedEnergyOfEvent,anEvent);
-  //cout<<"************************************ "<<excitedEnergyOfEvent<<endl;
-  //------------------------------------
-  // while(energyLightPiece<0||energyHeavyPiece<0||energyRecoiPiece<0)
-  // {
-  //   JunExBeamOn(beamEnergyOfEvent,excitedEnergyOfEvent);
-  // }
-  //---------------
-  // EmittingTreeRecorder *emitRec = EmittingTreeRecorder::Instance();
-  // emitRec->type[0]=0;//aplha
-  // emitRec->name.push_back("alpha");
-  // emitRec->energy[0]=energyLightPiece;
-  // emitRec->px[0]=velocityLightPiece[0];
-  // emitRec->py[0]=velocityLightPiece[1];
-  // emitRec->pz[0]=velocityLightPiece[2];
-  
-  // emitRec->type[1]=1;//breaking 9Be
-  // emitRec->name.push_back("9Be");
-  // emitRec->energy[1]=energyHeavyPiece;
-  // emitRec->px[1]=velocityHeavyPiece[0];
-  // emitRec->py[1]=velocityHeavyPiece[1];
-  // emitRec->pz[1]=velocityHeavyPiece[2];
-  
-  // emitRec->type[2]=2;//recoil 9Be
-  // emitRec->name.push_back("recoil");
-  // emitRec->energy[2]=energyRecoiPiece;
-  // emitRec->px[2]=mometumRecoiPiece[0];
-  // emitRec->py[2]=mometumRecoiPiece[1];
-  // emitRec->pz[2]=mometumRecoiPiece[2];
-  // emitRec->Fill();
-  //particle_1
-  // JunParticleGun->SetParticleDefinition(lightPiece);
-  // JunParticleGun->SetParticleCharge(0.);
-  // JunParticleGun->SetParticleEnergy(energyLightPiece);
-  // JunParticleGun->SetParticleTime(0.);
-  // JunParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
-  // JunParticleGun->SetParticleMomentumDirection(velocityLightPiece);
-  // JunParticleGun->GeneratePrimaryVertex(anEvent);
-  //G4cout<<"\033[35;1m # Miao ****"<<heavyPiece<<"****** \033[0m"<<G4endl;
-  //particle_2
-  // JunParticleGun->SetParticleDefinition(heavyPiece);
-  // JunParticleGun->SetParticleCharge(0.);
-  // JunParticleGun->SetParticleEnergy(energyHeavyPiece);
-  // JunParticleGun->SetParticleTime(0.);
-  // JunParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
-  // JunParticleGun->SetParticleMomentumDirection(velocityHeavyPiece);
-  // JunParticleGun->GeneratePrimaryVertex(anEvent);
-  //particle_3
-  // JunParticleGun->SetParticleDefinition(recoiPiece);
-  // JunParticleGun->SetParticleCharge(0.);
-  // JunParticleGun->SetParticleEnergy(energyRecoiPiece);
-  // JunParticleGun->SetParticleTime(0.);
-  // JunParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
-  // JunParticleGun->SetParticleMomentumDirection(mometumRecoiPiece);
-  // JunParticleGun->GeneratePrimaryVertex(anEvent);
-  //
+  //excitedEnergyOfEvent = *(exStates+(int)CLHEP::RandFlat::shoot(0.,numStates));
+  double ran = CLHEP::RandFlat::shoot(0.,100.);
+  if(ran<98) excitedEnergyOfEvent = 0.*MeV;
+  else excitedEnergyOfEvent = *(exStates+(int)CLHEP::RandFlat::shoot(0.,numStates));
+  //--------------------------------------------
+  if(excitedEnergyOfEvent < breakupThreshold)
+    JunPreparePieces(jbMode[2],beamEnergyOfEvent,excitedEnergyOfEvent,anEvent);
+  else
+    JunPreparePieces(jbMode[0],beamEnergyOfEvent,excitedEnergyOfEvent,anEvent);
 }
 
 void JunPrimaryGeneratorAction::JunSetExParticle(G4int zValue,G4int aValue,string particleID)
@@ -215,6 +163,10 @@ G4double legendre2(double *x,double *p)
 {
   return TMath::Power(ROOT::Math::assoc_legendre(p[0],p[1],x[0]),2);
 }
+G4double cExp(double *x,double *p)
+{
+  return TMath::Exp(-1.*x[0]/p[0]);
+}
 
 G4double JunPrimaryGeneratorAction::JunDisOfPiece(int l_jun,int m_jun)
 {
@@ -233,11 +185,16 @@ void JunPrimaryGeneratorAction::LoadCrossSection(string csfile)
 G4double JunPrimaryGeneratorAction::GetAngleByCS(G4double beamEnergy,G4double exEnergy)
 {
   double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);
+  //cout<<"fj::"<<cosE<<endl;
   double c=Mass_a/Mass_A*sqrt(cosE/(cosE-exEnergy));
   double xrad=acos(-1./c);
   double term1=sqrt(1+c*c+2*c*cos(xrad));
   double angle=acos((c+cos(xrad))/term1);
-  return CLHEP::RandFlat::shoot(0.,angle);
+  //cout<<"fj:"<<angle/TMath::Pi()*180.<<endl;
+  TF1 cs("cExp",cExp,0,angle/TMath::Pi()*180.,1);
+  cs.SetParameter(0,2.);//after the angle(degree) cs to 1/e
+  return cs.GetRandom()*deg;
+  //return CLHEP::RandFlat::shoot(0.,angle);
   //return hist_cs->GetRandom()*deg;
 }
 //======================
@@ -318,14 +275,35 @@ void JunPrimaryGeneratorAction::JunPreparePieces(JunBreakupMode mode,G4double be
       }
     }
   }
+  else if(mode.numbreak == 0)//elastic mode
+  {
+    mode.piece["recoilC13"].energy = ek0;
+    mode.piece["recoilC13"].direction = p0;
+  }
   else
   {
     cout<<"Error num of breakups"<<endl;
     exit(0);
   }
   //set particle gun
+  int pN = 0;//particle No.
   for(auto it=mode.piece.begin();it!=mode.piece.end();++it)
   {
+    //record the emmitting pieces
+    if(isRecord)
+    {
+      EmittingTreeRecorder *emitRec = EmittingTreeRecorder::Instance();
+      emitRec->type[pN] = it->second.A + it->second.Z + (int)it->second.isBreak;
+      emitRec->name.push_back(it->first);
+      emitRec->energy[pN] = it->second.energy;
+      emitRec->px[pN] = it->second.direction.x();
+      emitRec->py[pN] = it->second.direction.y();
+      emitRec->pz[pN] = it->second.direction.z();
+      emitRec->th[pN] = it->second.direction.theta()/TMath::Pi()*180.;
+      emitRec->ph[pN] = it->second.direction.phi()/TMath::Pi()*180.;
+      emitRec->Fill();
+    }
+    pN++;
     //it->second.g4pd = G4IonTable::GetIonTable()->GetIon(it->second.Z,it->second.A);
     G4ParticleDefinition *g4pd = G4IonTable::GetIonTable()->GetIon(it->second.Z,it->second.A);
     JunParticleGun->SetParticleDefinition(g4pd);
@@ -335,6 +313,5 @@ void JunPrimaryGeneratorAction::JunPreparePieces(JunBreakupMode mode,G4double be
     JunParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
     JunParticleGun->SetParticleMomentumDirection(it->second.direction);
     JunParticleGun->GeneratePrimaryVertex(anEvent);
-    //cout<<it->second.energy<<endl;
   }
 }

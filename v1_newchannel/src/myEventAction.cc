@@ -2,14 +2,14 @@
 
 myEventAction::myEventAction()
 {
-	JunParMan *jParManager = JunParMan::Instance();
-	G4int maxParticles = jParManager->GetPar("Max_Num_Particle");
-	energy = new double[maxParticles+1];
-	time = new double[maxParticles+1];
-	px = new double[maxParticles+1];
-	py = new double[maxParticles+1];
-	iStrip = new int[maxParticles+1];
-	jStrip = new int[maxParticles+1];
+  JunParMan *jParManager = JunParMan::Instance();
+  G4int maxParticles = jParManager->GetPar("Max_Num_Particle");
+  energy = new double[maxParticles+1];
+  time = new double[maxParticles+1];
+  px = new double[maxParticles+1];
+  py = new double[maxParticles+1];
+  iStrip = new int[maxParticles+1];
+  jStrip = new int[maxParticles+1];
 }
 
 myEventAction::~myEventAction()
@@ -24,8 +24,11 @@ myEventAction::~myEventAction()
   G4cout<<"End of myEventAction.(1)"<<G4endl;
 }
 
-void myEventAction::BeginOfEventAction(const G4Event*)
-{;}
+void myEventAction::BeginOfEventAction(const G4Event* evt)
+{
+  G4int id = evt->GetEventID();
+  if(!(id%10000)) G4cout<<"**** EventID:"<<id<<G4endl;
+}
 
 void myEventAction::EndOfEventAction(const G4Event* evt)
 {

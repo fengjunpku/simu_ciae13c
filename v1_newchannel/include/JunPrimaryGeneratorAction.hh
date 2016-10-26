@@ -84,8 +84,9 @@ private:
   G4double* exStates;
   int numStates;
   TH1D *hist_cs;
-  JunBreakupMode jbMode[2];//two modes: 0->3pieces, 1->5pieces
+  JunBreakupMode jbMode[3];//two modes: 0->3pieces, 1->5pieces
   JunPiece excitedC13;
+  bool isRecord;
 };
 
 #endif

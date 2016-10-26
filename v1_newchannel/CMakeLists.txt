@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-set(name    ciae13c)
+set(name    ciae13Cmc)
 set(mymain ${name}.cc )
 set(myexe  ${name}    )
 set(myproj  proj_${name}    )

@@ -30,11 +30,13 @@ private:
   TFile *pfile;
   static EmittingTreeRecorder* theRecorder;
 public:
-  int type[3];
+  int type[5];
   vector<string> name;
-  double energy[3];
-  double px[3];
-  double py[3];
-  double pz[3];
+  double energy[5];
+  double px[5];
+  double py[5];
+  double pz[5];
+  double th[5];
+  double ph[5];
 };
 #endif
