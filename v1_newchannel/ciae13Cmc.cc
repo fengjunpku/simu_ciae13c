@@ -8,6 +8,8 @@
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
+//================ROOT=================//
+#include "TStopwatch.h"
 //==================User==================//necessary
 #include "JunPrimaryGeneratorAction.hh"
 #include "myDetectorConstruction.hh"
@@ -21,6 +23,8 @@
 
 int main(int argc,char** argv)
 {
+	TStopwatch watch;
+	watch.Start();
   //================read config file ==========================================//
   JunParMan *parman = JunParMan::Instance();
   parman->ReadParFile("fj13c_setup.par");
@@ -85,5 +89,7 @@ int main(int argc,char** argv)
   delete runManager;
   runManager=NULL;
   G4cout<<"End of Main!"<<G4endl;
+	G4cout<<"== CPU Time : "<<watch.CpuTime()<<G4endl;
+	G4cout<<"== RealTime : "<<watch.RealTime()<<G4endl;
   return 0;
 }
