@@ -27,7 +27,7 @@ myEventAction::~myEventAction()
 void myEventAction::BeginOfEventAction(const G4Event* evt)
 {
   G4int id = evt->GetEventID();
-  if(!(id%10000)) G4cout<<"**** EventID:"<<id<<G4endl;
+  if(!(id%10000)) G4cout<<"      EventID : "<<id<<G4endl;
 }
 
 void myEventAction::EndOfEventAction(const G4Event* evt)

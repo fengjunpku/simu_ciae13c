@@ -89,7 +89,7 @@ int main(int argc,char** argv)
   delete runManager;
   runManager=NULL;
   G4cout<<"End of Main!"<<G4endl;
-	G4cout<<"== CPU Time : "<<watch.CpuTime()<<G4endl;
-	G4cout<<"== RealTime : "<<watch.RealTime()<<G4endl;
+	G4cout<<"    == CPU Time : \033[31;1m"<<watch.CpuTime()<<"\033[0m s,"<<G4endl;
+	G4cout<<"    == RealTime : \033[31;1m"<<watch.RealTime()<<"\033[0m s."<<G4endl;
   return 0;
 }

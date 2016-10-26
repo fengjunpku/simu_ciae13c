@@ -35,6 +35,11 @@ void myRunAction::BeginOfRunAction(const G4Run* aRun)
   outfile="etree.root";
   emitRec->OpenFile(outfile);
   G4cout<<"\033[35;1m # Miao \033[0m : Open the output \033[33m\'"<<outfile<<"\033[0m\' !"<<G4endl;
+  //---
+  nEvent = aRun->GetNumberOfEventToBeProcessed();
+  G4cout<<G4endl;
+  G4cout<<"     ======================================"<<G4endl;
+  G4cout<<"              n_event : "<<nEvent<<G4endl;
 }
 
 void myRunAction::EndOfRunAction(const G4Run* aRun)
@@ -44,6 +49,7 @@ void myRunAction::EndOfRunAction(const G4Run* aRun)
   //anaMan->CloseFile();
   /////////////////
   myTTreeRecorder *rec = myTTreeRecorder::Instance();
+  G4cout<<"     ======================================"<<G4endl;
   G4cout<<"\033[35;1m # Miao \033[0m : Try to Record to th file !"<<G4endl;
   rec->Record();
   G4cout<<"\033[35;1m # Miao \033[0m : Record the output file !"<<G4endl;

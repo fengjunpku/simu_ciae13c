@@ -22,6 +22,7 @@ public:
 
 private:
 	G4int fRunID;
+  G4int nEvent;
 };
 
 #endif
