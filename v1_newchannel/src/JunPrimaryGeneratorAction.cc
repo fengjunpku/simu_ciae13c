@@ -186,16 +186,27 @@ G4double JunPrimaryGeneratorAction::GetAngleByCS(G4double beamEnergy,G4double ex
 {
   double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);
   //cout<<"fj::"<<cosE<<endl;
-  double c=Mass_a/Mass_A*sqrt(cosE/(cosE-exEnergy));
-  double xrad=acos(-1./c);
-  double term1=sqrt(1+c*c+2*c*cos(xrad));
-  double angle=acos((c+cos(xrad))/term1);
-  //cout<<"fj:"<<angle/TMath::Pi()*180.<<endl;
+  double c = Mass_a/Mass_A*sqrt(cosE/(cosE-exEnergy));
+  double angle = asin(1./c);
+  //cout<<"fj:"<<angle/deg<<endl;
   TF1 cs("cExp",cExp,0,angle/TMath::Pi()*180.,1);
   cs.SetParameter(0,2.);//after the angle(degree) cs to 1/e
   return cs.GetRandom()*deg;
   //return CLHEP::RandFlat::shoot(0.,angle);
   //return hist_cs->GetRandom()*deg;
+}
+
+G4double JunPrimaryGeneratorAction::GetAngleByCS2(G4double beamEnergy,G4double exEnergy)
+{
+  TF1 cs2("cExp",cExp,0.,180,1);
+  cs2.SetParameter(0,10.);//after the angle(degree) cs to 1/e
+  G4double th_c = cs2.GetRandom()*deg;//the in c.m.s
+  G4double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);
+  G4double gamma = Mass_a/Mass_A*TMath::Sqrt(cosE/(cosE-exEnergy));
+  G4double termUp = gamma + TMath::Cos(th_c);
+  G4double termDw = TMath::Sqrt(1+2*gamma*termUp-gamma*gamma);
+  //cout<<TMath::ACos(termUp/termDw)/deg<<endl;
+  return TMath::ACos(termUp/termDw);
 }
 //======================
  G4double JunPrimaryGeneratorAction::JunPreSca(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta)
@@ -222,7 +233,7 @@ void JunPrimaryGeneratorAction::JunPreparePieces(JunBreakupMode mode,G4double be
   G4ThreeVector pin;
   pin.set(0,0,TMath::Sqrt((Eb+2*Mass_a)*Eb));//the beam
   // the excited one
-  G4double theta0=GetAngleByCS(Eb,Ex);//exC13
+  G4double theta0=GetAngleByCS2(Eb,Ex);//exC13
   G4double phi0=CLHEP::RandFlat::shoot(0.,360.)*deg;//exC13
   G4double ek0=JunPreSca(Eb,Ex,theta0);//exC13
   G4ThreeVector p0;//mometum of 13C

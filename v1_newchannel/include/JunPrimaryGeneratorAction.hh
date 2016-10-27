@@ -68,6 +68,7 @@ private:
   G4double GetMaxLabTheta(G4double initialEnergy,G4double exEnergy);
   void LoadCrossSection(string csfile);
   G4double GetAngleByCS(G4double beamEnergy,G4double exEnergy);
+  G4double GetAngleByCS2(G4double beamEnergy,G4double exEnergy);
   void JunPreparePieces(JunBreakupMode mode,G4double beamEnergy,G4double excitedEnergy,G4Event* anEvent);
   G4double JunPreSca(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta);
 private:
