@@ -91,7 +91,7 @@ void JunPrimaryGeneratorAction::JunSetExParticle(G4int zValue,G4int aValue,strin
   delete JunNucleiProperties;
   JunNucleiProperties = NULL;
 }
-
+/*
 void JunPrimaryGeneratorAction::JunExBeamOn(G4double beamEnergy,G4double excitedEnergy)
 {
   G4double Eb=beamEnergy;
@@ -129,7 +129,8 @@ void JunPrimaryGeneratorAction::JunExBeamOn(G4double beamEnergy,G4double excited
     mometumRecoiPiece={0,0,-1};
   }
 }
-
+*/
+/*
 G4double JunPrimaryGeneratorAction::GetMaxLabTheta(G4double initialEnergy,G4double exEnergy)
 {
   G4double ans2 = (Mass_B+Mass_b)*(exEnergy*Mass_B-initialEnergy*Mass_B+initialEnergy*Mass_a)/Mass_a/Mass_b/initialEnergy;
@@ -137,7 +138,8 @@ G4double JunPrimaryGeneratorAction::GetMaxLabTheta(G4double initialEnergy,G4doub
   else if(ans2>1) return 0;
   else return TMath::ACos(TMath::Sqrt(ans2))/deg;
 }
-
+*/
+/*
 G4double JunPrimaryGeneratorAction::JunExScattered(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta)
 {
   G4double Qvalue = 0.-exEnergy;
@@ -158,7 +160,7 @@ G4double JunPrimaryGeneratorAction::JunExScattered(G4double initialEnergy,G4doub
     return -1;
   }
 }
-
+*/
 G4double legendre2(double *x,double *p)
 {
   return TMath::Power(ROOT::Math::assoc_legendre(p[0],p[1],x[0]),2);
@@ -200,28 +202,28 @@ G4double JunPrimaryGeneratorAction::GetAngleByCS2(G4double beamEnergy,G4double e
 {
   TF1 cs2("cExp",cExp,0.,180,1);
   cs2.SetParameter(0,10.);//after the angle(degree) cs to 1/e
-  G4double th_c = cs2.GetRandom()*deg;//the in c.m.s
+  G4double th_c = cs2.GetRandom()*deg;//theta in c.m.s
   G4double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);
   G4double gamma = Mass_a/Mass_A*TMath::Sqrt(cosE/(cosE-exEnergy));
+  G4double maxTh_c = gamma>1.?TMath::ACos(-1./gamma):TMath::Pi();
   G4double termUp = gamma + TMath::Cos(th_c);
   G4double termDw = TMath::Sqrt(1+2*gamma*termUp-gamma*gamma);
-  //cout<<TMath::ACos(termUp/termDw)/deg<<endl;
-  return TMath::ACos(termUp/termDw);
+  G4double iflag = th_c>maxTh_c?-1:1;
+  //cout<<iflag*TMath::ACos(termUp/termDw)/deg<<endl;
+  return iflag*TMath::ACos(termUp/termDw);
 }
 //======================
  G4double JunPrimaryGeneratorAction::JunPreSca(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta)
  {
   G4double Qvalue = 0.-exEnergy;
   G4double part1,part2,part3;
-  G4double flag = -1;
-  while(flag<0)
-  {
-    part1=TMath::Sqrt(Mass_a*Mass_b*initialEnergy)*TMath::Cos(scatteredTheta)/(Mass_B+Mass_b);
-    part2=initialEnergy*(Mass_B-Mass_a)/(Mass_B+Mass_b)+TMath::Power(part1,2);
-    part3=Mass_B*Qvalue/(Mass_B+Mass_b);
-    flag = part2+part3;
-  }
-  return TMath::Power((part1+TMath::Sqrt(part2+part3)),2);
+  G4double iflag = (scatteredTheta>0)?1.:-1.;
+
+  part1 = TMath::Sqrt(Mass_a*Mass_b*initialEnergy)*TMath::Cos(scatteredTheta)/(Mass_B+Mass_b);
+  part2 = initialEnergy*(Mass_B-Mass_a)/(Mass_B+Mass_b)+part1*part1;//TMath::Power(part1,2);
+  part3 = Mass_B*Qvalue/(Mass_B+Mass_b);
+  //if(iflag*part2+part3<0) {cout<<"Warn! : "<<scatteredTheta/deg<<" "<<exEnergy<<" "<<part1<<" "<<part2<<endl;exit(0);}
+  return TMath::Power((part1+iflag*TMath::Sqrt(part2+part3)),2);
  }
 
 void JunPrimaryGeneratorAction::JunPreparePieces(JunBreakupMode mode,G4double beamEnergy,G4double excitedEnergy,G4Event* anEvent)
@@ -233,9 +235,9 @@ void JunPrimaryGeneratorAction::JunPreparePieces(JunBreakupMode mode,G4double be
   G4ThreeVector pin;
   pin.set(0,0,TMath::Sqrt((Eb+2*Mass_a)*Eb));//the beam
   // the excited one
-  G4double theta0=GetAngleByCS2(Eb,Ex);//exC13
-  G4double phi0=CLHEP::RandFlat::shoot(0.,360.)*deg;//exC13
-  G4double ek0=JunPreSca(Eb,Ex,theta0);//exC13
+  G4double theta0 = GetAngleByCS2(Eb,Ex);//exC13
+  G4double phi0 = CLHEP::RandFlat::shoot(0.,360.)*deg;//exC13
+  G4double ek0 = JunPreSca(Eb,Ex,theta0);//exC13
   G4ThreeVector p0;//mometum of 13C
   G4double m0 = excitedC13.mass;//mass of excitedC13
   G4double p0mag=TMath::Sqrt((ek0+2*m0)*ek0);

@@ -62,10 +62,10 @@ public:
   void GeneratePrimaries(G4Event* anEvent);
 private:
   void JunSetExParticle(G4int zValue,G4int aValue,string particleID);
-  void JunExBeamOn(G4double beamEnergy,G4double excitedEnergy);
-  G4double JunExScattered(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta);
+  //void JunExBeamOn(G4double beamEnergy,G4double excitedEnergy);
+  //G4double JunExScattered(G4double initialEnergy,G4double exEnergy,G4double scatteredTheta);
   G4double JunDisOfPiece(int l_jun,int m_jun);
-  G4double GetMaxLabTheta(G4double initialEnergy,G4double exEnergy);
+  //G4double GetMaxLabTheta(G4double initialEnergy,G4double exEnergy);
   void LoadCrossSection(string csfile);
   G4double GetAngleByCS(G4double beamEnergy,G4double exEnergy);
   G4double GetAngleByCS2(G4double beamEnergy,G4double exEnergy);
