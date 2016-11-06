@@ -2,7 +2,7 @@
 
 JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
 {
-  isRecord = true;//record the emmitting ones
+  isRecord = false;//record the emmitting ones
   //particle number per shoot 
   G4int numParticle = 1;
   JunParticleGun = new G4ParticleGun(numParticle);
@@ -26,7 +26,7 @@ JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
   //cout<<"Mass of 9Be : "<<Mass_A<<endl;
   //cout<<"Mass of 4He : "<<massLightPiece<<endl;
   //--
-  //LoadCrossSection("../genCS/cs_16.00.root");//cross-section in lab
+  LoadCrossSection("../genCS/hcs.root");//cross-section in lab
   //------------------------
   G4NucleiProperties* JunNucleiProperties = new G4NucleiProperties();
   excitedC13 = {13,6,0,JunNucleiProperties->GetNuclearMass(13,6),G4ThreeVector(0,0,1),0,NULL};
@@ -181,7 +181,7 @@ G4double JunPrimaryGeneratorAction::JunDisOfPiece(int l_jun,int m_jun)
 void JunPrimaryGeneratorAction::LoadCrossSection(string csfile)
 {
   TFile *in_file = TFile::Open(csfile.c_str());
-  hist_cs = (TH1D*)in_file->GetObjectChecked("h1","TH1D");
+  hist_cs = (TH1F*)in_file->GetObjectChecked("hcs","TH1F");
 }
 
 G4double JunPrimaryGeneratorAction::GetAngleByCS(G4double beamEnergy,G4double exEnergy)
@@ -203,6 +203,7 @@ G4double JunPrimaryGeneratorAction::GetAngleByCS2(G4double beamEnergy,G4double e
   TF1 cs2("cExp",cExp,0.,180,1);
   cs2.SetParameter(0,10.);//after the angle(degree) cs to 1/e
   G4double th_c = cs2.GetRandom()*deg;//theta in c.m.s
+  if(hist_cs) th_c = hist_cs->GetRandom()*deg;
   G4double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);
   G4double gamma = Mass_a/Mass_A*TMath::Sqrt(cosE/(cosE-exEnergy));
   G4double maxTh_c = gamma>1.?TMath::ACos(-1./gamma):TMath::Pi();
