@@ -1,4 +1,4 @@
-void readDAT()
+void loadDAT()
 {
   TH1F *hcs = new TH1F("hcs","hcs",1800,-0.05,179.95);
   ifstream infile;
