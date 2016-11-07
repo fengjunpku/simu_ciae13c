@@ -1,6 +1,8 @@
 # standard format : type: 0
 # type name vale
 0 Max_Num_Particle 6
+0 IsRecord 0
+0 RecordDB 1000
 # Par_Of_DSSD : type: 1 unit mm deg
 # type name height*width*thickness vstrips*hstrips distance angle
 1 t1l1 50 50 0.04 16 16 200 22

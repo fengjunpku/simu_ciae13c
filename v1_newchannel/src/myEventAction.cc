@@ -27,7 +27,15 @@ myEventAction::~myEventAction()
 void myEventAction::BeginOfEventAction(const G4Event* evt)
 {
   G4int id = evt->GetEventID();
-  if(!(id%10000)) G4cout<<"      EventID : "<<id<<G4endl;
+  JunParMan* jParManager = JunParMan::Instance();
+  bool isRecord  = (bool)jParManager->GetPar("IsRecord");
+  int dbRecord = (int)jParManager->GetPar("RecordDB");
+  if(!(id%dbRecord)) 
+      jParManager->SetPar("IsRecord",1);
+  else
+    jParManager->SetPar("IsRecord",0);
+  if(!(id%10000))
+    G4cout<<"      EventID : "<<id<<G4endl;;
 }
 
 void myEventAction::EndOfEventAction(const G4Event* evt)

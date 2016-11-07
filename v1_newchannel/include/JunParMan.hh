@@ -31,6 +31,7 @@ public:
 	static JunParMan* Instance();
 	void ReadParFile(string filename);
 	float GetPar(string parname);
+  void SetPar(string parname,float value);
 	Par_DSSD* GetDSSDPar(string dssdname);
 	void PrintAll();
 	vector<string> GetAllDSSDName();

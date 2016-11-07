@@ -68,7 +68,17 @@ float JunParMan::GetPar(string parname)
 		cout<<"Miao! Error: Key: "<<parname<<" is not in par Map!"<<endl;
 		exit(0);
 	}
-		return mPar[parname];
+	return mPar[parname];
+}
+
+void JunParMan::SetPar(string parname,float value)
+{
+  if(!mPar.count(parname))
+  {
+    cout<<"Miao! Error: Key: "<<parname<<" is not in par Map!"<<endl;
+    exit(0);
+  }
+  mPar[parname] = value;
 }
 
 vector<string> JunParMan::GetAllDSSDName()
