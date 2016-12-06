@@ -2,11 +2,12 @@
 
 JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
 {
+  hist_cs = 0;
   //particle number per shoot 
   G4int numParticle = 1;
   JunParticleGun = new G4ParticleGun(numParticle);
   //---basic parameters for elastic breakup
-  G4double states_list[] = {0.*MeV,13.2*MeV,14.2*MeV,15.*MeV,16.*MeV};
+  G4double states_list[] = {0.*MeV};//,13.2*MeV,14.2*MeV,15.*MeV,16.*MeV};
   //string files_list[] = {"genCS/cs_"}
   numStates = sizeof(states_list)/sizeof(states_list[0]);
   exStates = new G4double[numStates];
@@ -25,7 +26,7 @@ JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
   //cout<<"Mass of 9Be : "<<Mass_A<<endl;
   //cout<<"Mass of 4He : "<<massLightPiece<<endl;
   //--
-  LoadCrossSection("../genCS/hcs.root");//cross-section in lab
+  //LoadCrossSection("../genCS/hcs.root");//cross-section in lab
   //------------------------
   G4NucleiProperties* JunNucleiProperties = new G4NucleiProperties();
   excitedC13 = {13,6,0,JunNucleiProperties->GetNuclearMass(13,6),G4ThreeVector(0,0,1),0,NULL};
@@ -56,12 +57,12 @@ void JunPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //----------------------------------------------
   G4double beamEnergyOfEvent = 65.*MeV;
-  G4double excitedEnergyOfEvent = 15.*MeV;
+  G4double excitedEnergyOfEvent = 0.*MeV;
   //----------------------------------
   //excitedEnergyOfEvent = *(exStates+(int)CLHEP::RandFlat::shoot(0.,numStates));
-  double ran = CLHEP::RandFlat::shoot(0.,100.);
-  if(ran<80) excitedEnergyOfEvent = 0.*MeV;
-  else excitedEnergyOfEvent = *(exStates+(int)CLHEP::RandFlat::shoot(0.,numStates));
+  //double ran = CLHEP::RandFlat::shoot(0.,100.);
+  //if(ran<80) excitedEnergyOfEvent = 0.*MeV;
+  //else excitedEnergyOfEvent = *(exStates+(int)CLHEP::RandFlat::shoot(0.,numStates));
   //--------------------------------------------
   if(excitedEnergyOfEvent < breakupThreshold)
     JunPreparePieces(jbMode[2],beamEnergyOfEvent,excitedEnergyOfEvent,anEvent);
@@ -122,7 +123,7 @@ G4double JunPrimaryGeneratorAction::GetAngleByCS(G4double beamEnergy,G4double ex
   double angle = asin(1./c);
   //cout<<"fj:"<<angle/deg<<endl;
   TF1 cs("cExp",cExp,0,angle/TMath::Pi()*180.,1);
-  cs.SetParameter(0,10.);//after the angle(degree) cs to 1/e
+  cs.SetParameter(0,100.);//after the angle(degree) cs to 1/e
   return cs.GetRandom()*deg;
   //return CLHEP::RandFlat::shoot(0.,angle);
   //return hist_cs->GetRandom()*deg;
@@ -131,7 +132,7 @@ G4double JunPrimaryGeneratorAction::GetAngleByCS(G4double beamEnergy,G4double ex
 G4double JunPrimaryGeneratorAction::GetAngleByCS2(G4double beamEnergy,G4double exEnergy)
 {
   TF1 cs2("cExp",cExp,0.,180,1);
-  cs2.SetParameter(0,10.);//after the angle(degree) cs to 1/e
+  cs2.SetParameter(0,100.);//after the angle(degree) cs to 1/e
   G4double th_c = cs2.GetRandom()*deg;//theta in c.m.s
   if(hist_cs) th_c = hist_cs->GetRandom()*deg;
   G4double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);
