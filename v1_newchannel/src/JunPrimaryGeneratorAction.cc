@@ -14,10 +14,11 @@ JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
   for(int i=0;i<numStates;++i)
     exStates[i] = states_list[i];
   //-----------
-  JunSetExParticle(4,9,"target");//9Be
+  //JunSetExParticle(4,9,"target");//9Be
+  JunSetExParticle(79,197,"target");//79Au
   JunSetExParticle(6,13,"beam");//13C
-  JunSetExParticle(2,4,"light");//alpha
-  JunSetExParticle(4,9,"heavy");//9Be
+  //JunSetExParticle(2,4,"light");//alpha
+  //JunSetExParticle(4,9,"heavy");//9Be
   Mass_b = Mass_a;
   Mass_B = Mass_A;
   breakupThreshold = 10.65*MeV;
@@ -44,7 +45,8 @@ JunPrimaryGeneratorAction::JunPrimaryGeneratorAction()
   //elastic
   jbMode[2].threshold = -1000*MeV;
   jbMode[2].numbreak = 0;
-  jbMode[2].piece["recoilBe9"] = {9,4,0,JunNucleiProperties->GetNuclearMass(9,4),G4ThreeVector(0,0,1),0,NULL};
+  //jbMode[2].piece["recoilBe9"] = {9,4,0,JunNucleiProperties->GetNuclearMass(9,4),G4ThreeVector(0,0,1),0,NULL};
+  jbMode[2].piece["recoilBe9"] = {197,79,0,JunNucleiProperties->GetNuclearMass(197,79),G4ThreeVector(0,0,1),0,NULL};
   jbMode[2].piece["recoilC13"] = {13,6,0,JunNucleiProperties->GetNuclearMass(13,6),G4ThreeVector(0,0,1),0,NULL};
 }
 
