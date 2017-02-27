@@ -58,7 +58,7 @@ JunPrimaryGeneratorAction::~JunPrimaryGeneratorAction()
 void JunPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //----------------------------------------------
-  G4double beamEnergyOfEvent = 65.*MeV;
+  G4double beamEnergyOfEvent = 35.0*MeV;
   G4double excitedEnergyOfEvent = 0.*MeV;
   //----------------------------------
   //excitedEnergyOfEvent = *(exStates+(int)CLHEP::RandFlat::shoot(0.,numStates));
@@ -103,6 +103,11 @@ G4double cExp(double *x,double *p)
   return TMath::Exp(-1.*x[0]/p[0]);
 }
 
+G4double cSin4(double *x,double *p)
+{
+	return p[0]*TMath::Power(TMath::Sin(x[0]*TMath::DegToRad()),-4);
+}
+
 G4double JunPrimaryGeneratorAction::JunDisOfPiece(int l_jun,int m_jun)
 {
   TF1 flen2("len",legendre2,-1,1,2);
@@ -133,8 +138,10 @@ G4double JunPrimaryGeneratorAction::GetAngleByCS(G4double beamEnergy,G4double ex
 
 G4double JunPrimaryGeneratorAction::GetAngleByCS2(G4double beamEnergy,G4double exEnergy)
 {
-  TF1 cs2("cExp",cExp,0.,180,1);
-  cs2.SetParameter(0,100.);//after the angle(degree) cs to 1/e
+  //TF1 cs2("cExp",cExp,0.,180,1);
+  //cs2.SetParameter(0,10.);//after the angle(degree) cs to 1/e
+	TF1 cs2("cSin4",cSin4,0.,180,1);
+	cs.SetParameter(0,1);
   G4double th_c = cs2.GetRandom()*deg;//theta in c.m.s
   if(hist_cs) th_c = hist_cs->GetRandom()*deg;
   G4double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);

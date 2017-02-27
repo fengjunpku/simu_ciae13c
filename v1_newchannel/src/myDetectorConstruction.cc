@@ -43,7 +43,7 @@ G4VPhysicalVolume* myDetectorConstruction::DefineVoumes()
 		G4RotationMatrix *rot = new G4RotationMatrix();
 		rot->rotateX(0*deg);//rotation
 		G4ThreeVector tran(0.,0.,0.);//translation
-		pSolidTarget = new G4Tubs("solidTarget",0.*cm,1.5*cm,5.*um,0.*deg,360.*deg);
+		pSolidTarget = new G4Tubs("solidTarget",0.*cm,1.5*cm,0.05*um,0.*deg,360.*deg);
 		pLogicTarget = new G4LogicalVolume(pSolidTarget,pBerylium,"logicTarget",0,0,0,true);
 		pPhysiTarget = new G4PVPlacement(rot,tran,pLogicTarget,"physiTarget",pLogicWorld,false,0);
 		//-------------dssd-----------
