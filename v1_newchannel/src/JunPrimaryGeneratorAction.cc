@@ -105,7 +105,7 @@ G4double cExp(double *x,double *p)
 
 G4double cSin4(double *x,double *p)
 {
-	return p[0]*TMath::Power(TMath::Sin(x[0]*TMath::DegToRad()),-4);
+	return p[0]*TMath::Power(TMath::Sin(0.5*x[0]*TMath::DegToRad()),-4);
 }
 
 G4double JunPrimaryGeneratorAction::JunDisOfPiece(int l_jun,int m_jun)
@@ -140,8 +140,8 @@ G4double JunPrimaryGeneratorAction::GetAngleByCS2(G4double beamEnergy,G4double e
 {
   //TF1 cs2("cExp",cExp,0.,180,1);
   //cs2.SetParameter(0,10.);//after the angle(degree) cs to 1/e
-	TF1 cs2("cSin4",cSin4,0.,180,1);
-	cs.SetParameter(0,1);
+	TF1 cs2("cSin4",cSin4,5,175,1);
+	cs2.SetParameter(0,1.);
   G4double th_c = cs2.GetRandom()*deg;//theta in c.m.s
   if(hist_cs) th_c = hist_cs->GetRandom()*deg;
   G4double cosE = beamEnergy*Mass_A/(Mass_A+Mass_a);
